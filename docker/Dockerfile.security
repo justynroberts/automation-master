@@ -1,0 +1,38 @@
+# Secure Docker image for workflow execution
+FROM node:18-alpine
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S -u 1001 -G nodejs nodejs
+
+# Install security tools and minimal dependencies
+RUN apk add --no-cache \
+    python3 \
+    py3-pip \
+    bash \
+    curl \
+    jq \
+    && rm -rf /var/cache/apk/*
+
+# Create secure workspace
+WORKDIR /workspace
+RUN chown -R nodejs:nodejs /workspace
+
+# Remove dangerous commands and binaries
+RUN rm -f /bin/su /bin/mount /bin/umount /usr/bin/passwd /usr/bin/chpasswd \
+    /usr/bin/newgrp /bin/chgrp /usr/bin/gpasswd /usr/bin/chage
+
+# Set resource limits
+RUN echo "* soft nproc 25" >> /etc/security/limits.conf && \
+    echo "* hard nproc 25" >> /etc/security/limits.conf && \
+    echo "* soft nofile 50" >> /etc/security/limits.conf && \
+    echo "* hard nofile 50" >> /etc/security/limits.conf
+
+# Switch to non-root user
+USER nodejs
+
+# Set secure PATH
+ENV PATH="/usr/local/bin:/usr/bin:/bin"
+
+# Default command
+CMD ["/bin/sh"]

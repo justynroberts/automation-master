@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # Secure execution container
+  workflow-executor:
+    build:
+      context: .
+      dockerfile: Dockerfile.security
+    image: workflow-executor:latest
+    restart: "no"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=50m
+      - /var/tmp:rw,noexec,nosuid,size=10m
+    networks:
+      - none
+    security_opt:
+      - no-new-privileges:true
+      - seccomp:unconfined
+    cap_drop:
+      - ALL
+    user: "1001:1001"
+    ulimits:
+      nproc: 25
+      nofile:
+        soft: 50
+        hard: 50
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+          cpus: '0.25'
+        reservations:
+          memory: 32M
+          cpus: '0.1'
+    environment:
+      - NODE_ENV=production
+      - NODE_OPTIONS=--max-old-space-size=32
+    command: ["/bin/sh", "-c", "while true; do sleep 3600; done"]
+
+networks:
+  none:
+    external: true

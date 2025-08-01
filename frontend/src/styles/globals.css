@@ -1,0 +1,339 @@
+/* Global dark theme styles */
+@import '@xyflow/react/dist/style.css';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: #0a0a0a;
+  color: #ffffff;
+  overflow-x: hidden;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+  transform: scale(0.9);
+  transform-origin: top left;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #404040;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #505050;
+}
+
+/* React Flow dark theme overrides */
+.react-flow {
+  background-color: #121212 !important;
+}
+
+.react-flow__background {
+  background-color: #121212 !important;
+}
+
+.react-flow__background pattern {
+  stroke: #2d2d2d !important;
+}
+
+.react-flow__minimap {
+  background-color: #1a1a1a !important;
+  border: 1px solid #404040 !important;
+}
+
+.react-flow__controls {
+  background-color: #2d2d2d !important;
+  border: 1px solid #404040 !important;
+}
+
+.react-flow__controls button {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid #404040 !important;
+}
+
+.react-flow__controls button:hover {
+  background-color: #404040 !important;
+}
+
+.react-flow__edge-path {
+  stroke: #666666 !important;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: #00d4aa !important;
+}
+
+.react-flow__handle {
+  background-color: #666666 !important;
+  border: 2px solid #404040 !important;
+}
+
+.react-flow__handle.connectingfrom,
+.react-flow__handle.connectingto {
+  background-color: #00d4aa !important;
+}
+
+/* Selection styles */
+.react-flow__node.selected {
+  box-shadow: 0 0 0 2px #00d4aa !important;
+}
+
+/* Animation keyframes */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Utility classes */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Focus styles */
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid #00d4aa;
+  outline-offset: 2px;
+}
+
+/* Disabled styles */
+button:disabled,
+input:disabled,
+textarea:disabled,
+select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #404040;
+  border-top: 2px solid #00d4aa;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Status indicators */
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.status-pending { background-color: #ffab00; }
+.status-running { background-color: #1fbad3; }
+.status-completed { background-color: #4caf50; }
+.status-failed { background-color: #ff5252; }
+.status-cancelled { background-color: #8a8a8a; }
+
+/* Button styles */
+.btn-primary {
+  background-color: #00d4aa;
+  color: #000000;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary:hover {
+  background-color: #00c299;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3);
+}
+
+.btn-secondary {
+  background-color: #2d2d2d;
+  color: #ffffff;
+  border: 1px solid #404040;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-secondary:hover {
+  background-color: #404040;
+  border-color: #505050;
+}
+
+.btn-danger {
+  background-color: #ff5252;
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-danger:hover {
+  background-color: #ff4444;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 82, 82, 0.3);
+}
+
+/* Input styles */
+.input-primary {
+  background-color: #1a1a1a;
+  border: 1px solid #404040;
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.input-primary:focus {
+  border-color: #00d4aa;
+  background-color: #2d2d2d;
+}
+
+.input-primary::placeholder {
+  color: #8a8a8a;
+}
+
+/* Card styles */
+.card {
+  background-color: #1a1a1a;
+  border: 1px solid #2d2d2d;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  border-color: #404040;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #2d2d2d;
+}
+
+.card-body {
+  padding: 24px;
+}
+
+.card-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #2d2d2d;
+  background-color: #121212;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+  background-color: #1a1a1a;
+  border: 1px solid #404040;
+  border-radius: 16px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease-out;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+}

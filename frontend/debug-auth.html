@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auth Debug</title>
+</head>
+<body>
+    <h1>Auth Debug Test</h1>
+    <button onclick="testRegistration()">Test Registration</button>
+    <button onclick="testLogin()">Test Login</button>
+    <div id="result"></div>
+
+    <script>
+        async function testRegistration() {
+            try {
+                const response = await fetch('http://localhost:3001/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: 'debug-test@example.com',
+                        password: 'testpassword123',
+                        firstName: 'Debug',
+                        lastName: 'Test'
+                    })
+                });
+                
+                const data = await response.json();
+                document.getElementById('result').innerHTML = `
+                    <h3>Registration Result:</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                document.getElementById('result').innerHTML = `
+                    <h3>Registration Error:</h3>
+                    <pre>${error.message}</pre>
+                `;
+                console.error('Registration error:', error);
+            }
+        }
+
+        async function testLogin() {
+            try {
+                const response = await fetch('http://localhost:3001/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: 'frontend-test@example.com',
+                        password: 'testpassword123'
+                    })
+                });
+                
+                const data = await response.json();
+                document.getElementById('result').innerHTML = `
+                    <h3>Login Result:</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                document.getElementById('result').innerHTML = `
+                    <h3>Login Error:</h3>
+                    <pre>${error.message}</pre>
+                `;
+                console.error('Login error:', error);
+            }
+        }
+    </script>
+</body>
+</html>

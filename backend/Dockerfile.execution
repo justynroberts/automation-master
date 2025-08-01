@@ -1,0 +1,72 @@
+# Multi-language execution container for workflow automation
+FROM ubuntu:22.04
+
+# Avoid prompts from apt
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update and install essential packages
+RUN apt-get update && apt-get install -y \
+    # Basic utilities
+    curl \
+    wget \
+    git \
+    vim \
+    nano \
+    jq \
+    # Build tools
+    build-essential \
+    # Python
+    python3 \
+    python3-pip \
+    python3-venv \
+    # Node.js
+    nodejs \
+    npm \
+    # Additional tools
+    bash \
+    coreutils \
+    findutils \
+    grep \
+    sed \
+    gawk \
+    # Network tools
+    net-tools \
+    iputils-ping \
+    # Clean up
+    && rm -rf /var/lib/apt/lists/*
+
+# Install common Python packages
+RUN pip3 install --no-cache-dir \
+    requests \
+    pandas \
+    numpy \
+    json5 \
+    pyyaml \
+    psutil \
+    dateutils \
+    cryptography
+
+# Install common Node.js packages globally
+RUN npm install -g \
+    lodash \
+    axios \
+    moment \
+    uuid
+
+# Create non-root user for security
+RUN useradd -m -s /bin/bash execuser && \
+    # Create nobody user/group if not exists
+    groupadd -f nobody && \
+    useradd -g nobody -s /bin/bash nobody 2>/dev/null || true
+
+# Set working directory
+WORKDIR /workspace
+
+# Make workspace accessible to both users
+RUN chmod 755 /workspace
+
+# Default user is execuser, but nobody is available for Docker runs
+USER execuser
+
+# Default command
+CMD ["/bin/bash"]
